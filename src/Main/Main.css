@@ -8,3 +8,9 @@
   height: 30px;
   font-size: 1.2em;
 }
+
+.input_frame button {
+  margin-left: 10px;
+  height: 36px;
+  width: 50px;
+}
