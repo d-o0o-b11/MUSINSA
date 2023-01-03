@@ -1,0 +1,10 @@
+.input_frame h4 {
+  margin-top: 150px;
+  margin-bottom: 10px;
+}
+
+.input_frame input {
+  width: 200px;
+  height: 30px;
+  font-size: 1.2em;
+}
