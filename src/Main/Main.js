@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Main.css";
 import Container from "../Component/Container";
 import ListItem from "../Component/ListItem";
@@ -7,6 +7,12 @@ import axios from "axios";
 const Main = () => {
   const [Number, SetNumber] = useState(0);
   const [Size, SetSize] = useState(0);
+  const [data, SetData] = useState([]);
+  const [check, SetCheck] = useState(0);
+
+  useEffect(() => {
+    GetData();
+  }, [check]);
 
   const SetPartNumber = (e) => {
     SetNumber(e.target.value);
@@ -16,16 +22,36 @@ const Main = () => {
     SetSize(e.target.value);
   };
 
+  const GetData = () => {
+    axios({
+      method: "get",
+      url: "http://musinsa-stock-notification-bot.shop/api/v1/product",
+    }).then((Response) => {
+      SetData(Response.data);
+    });
+  };
+
   const SendData = () => {
     axios({
       method: "post",
-      url: "http://52.79.196.124:8080/api/v1/product",
+      url: "http://musinsa-stock-notification-bot.shop/api/v1/product",
       data: {
         id: Number,
         size: Size,
       },
     }).then((Response) => {
-      console.log(Response);
+      SetCheck(check + 1);
+    });
+  };
+
+  const DeleteList = (Number, Size) => {
+    console.log("Number: " + Number);
+    console.log("Size: " + Size);
+    axios({
+      method: "delete",
+      url: `http://musinsa-stock-notification-bot.shop/api/v1/product/${Number}/${Size}`,
+    }).then((Response) => {
+      SetCheck(check + 1);
     });
   };
 
@@ -41,10 +67,17 @@ const Main = () => {
       </div>
 
       <div className="list">
-        <ListItem>ddd</ListItem>
-        <ListItem>ddd</ListItem>
-        <ListItem>ddd</ListItem>
-        <ListItem>ddd</ListItem>
+        {data.map((clothes, i) => {
+          return (
+            <ListItem key={i} onClick={DeleteList}>
+              <h2>{clothes.id}</h2>
+              <h4>{clothes.size}</h4>
+              <button onClick={() => DeleteList(clothes.id, clothes.size)}>
+                cancel
+              </button>
+            </ListItem>
+          );
+        })}
       </div>
     </Container>
   );
