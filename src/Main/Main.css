@@ -35,8 +35,10 @@
   grid-row-gap: 80px;
 }
 
-.list img {
+.list img:nth-child(1) {
   margin-top: 30px;
+  display: block;
+  margin: 30px 254px 20px 254px;
 }
 
 @media screen and (max-width: 1300px) {

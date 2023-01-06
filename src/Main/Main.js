@@ -12,12 +12,6 @@ const Main = () => {
   const [data, SetData] = useState([]);
   const [check, SetCheck] = useState(0);
 
-  // const navigate = useNavigate();
-
-  // const handleClick = (Nmber) => {
-  //   navigate(`https://www.musinsa.com/app/goods/${Nmber}`);
-  // };
-
   useEffect(() => {
     GetData();
   }, [check]);
@@ -33,7 +27,7 @@ const Main = () => {
   const GetData = () => {
     axios({
       method: "get",
-      url: "http://musinsa-stock-notification-bot.shop/api/v1/product",
+      url: "https://musinsa-stock-notification-bot.shop/api/v1/product",
     }).then((Response) => {
       console.log(Response.data);
       // console.log(Response.data.imageHTML.slice('"'));
@@ -45,7 +39,7 @@ const Main = () => {
   const SendData = () => {
     axios({
       method: "post",
-      url: "http://musinsa-stock-notification-bot.shop/api/v1/product",
+      url: "https://musinsa-stock-notification-bot.shop/api/v1/product",
       data: {
         id: Number,
         size: Size,
@@ -58,7 +52,7 @@ const Main = () => {
   const DeleteList = (Number, Size) => {
     axios({
       method: "delete",
-      url: `http://musinsa-stock-notification-bot.shop/api/v1/product/${Number}/${Size}`,
+      url: `https://musinsa-stock-notification-bot.shop/api/v1/product/${Number}/${Size}`,
     }).then((Response) => {
       SetCheck(check + 1);
     });
@@ -85,12 +79,12 @@ const Main = () => {
                 }>
                 <img
                   src={cancel}
-                  width="20px"
+                  width="30px"
                   onClick={() => DeleteList(clothes.id, clothes.size)}
                 />
                 <img
                   src={
-                    "https:" +
+                    "httpss:" +
                     clothes.imageHTML.split('"', 2).toString().substr(10)
                   }
                   width="170px"

@@ -22,8 +22,9 @@ const StyledListItem = styled.div`
   background: rgba(232, 220, 202);
   position: relative;
   img {
-    place-items: center;
-    display: grid;
+    // display: flex;
+    justify-content: center;
+    align-items: center;
   }
   &:hover {
     background-color: rgb(227, 195, 158);
