@@ -14,18 +14,19 @@ const StyledListItem = styled.div`
   heigth: ${(props) => props.height || "460px"};
   min-height: ${(props) => props.height || "400px"};
   margin: 0 auto;
-  background: #f8f1f1;
   border-radius: 20px;
   border: none;
   display: block;
   margin-top: 30px;
   box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
-  background: rgba(248, 241, 241, 0.6);
-  // font-size: 2em;
+  background: rgba(232, 220, 202);
   position: relative;
-  //font값도 props로 받아오기
+  img {
+    place-items: center;
+    display: grid;
+  }
   &:hover {
-    background-color: #e3c39e;
+    background-color: rgb(227, 195, 158);
     cursor: pointer;
   }
   @media screen and (max-width: 840px) {

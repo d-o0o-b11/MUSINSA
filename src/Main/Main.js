@@ -1,14 +1,22 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import "./Main.css";
 import Container from "../Component/Container";
 import ListItem from "../Component/ListItem";
 import axios from "axios";
+import cancel from "../img/cancel.png";
 
 const Main = () => {
   const [Number, SetNumber] = useState(0);
   const [Size, SetSize] = useState(0);
   const [data, SetData] = useState([]);
   const [check, SetCheck] = useState(0);
+
+  // const navigate = useNavigate();
+
+  // const handleClick = (Nmber) => {
+  //   navigate(`https://www.musinsa.com/app/goods/${Nmber}`);
+  // };
 
   useEffect(() => {
     GetData();
@@ -27,7 +35,10 @@ const Main = () => {
       method: "get",
       url: "http://musinsa-stock-notification-bot.shop/api/v1/product",
     }).then((Response) => {
-      SetData(Response.data);
+      console.log(Response.data);
+      // console.log(Response.data.imageHTML.slice('"'));
+      // console.log((Response.data.imageHTML || "").split('"'));
+      return SetData(Response.data);
     });
   };
 
@@ -45,8 +56,6 @@ const Main = () => {
   };
 
   const DeleteList = (Number, Size) => {
-    console.log("Number: " + Number);
-    console.log("Size: " + Size);
     axios({
       method: "delete",
       url: `http://musinsa-stock-notification-bot.shop/api/v1/product/${Number}/${Size}`,
@@ -63,18 +72,33 @@ const Main = () => {
         <h4>재고 확인</h4>
         <input type="text" placeholder="품번" onChange={SetPartNumber} />
         <input type="text" placeholder="사이즈" onChange={SetPartSize} />
-        <button onClick={SendData}>검색</button>
+        <button onClick={SendData}>저장</button>
       </div>
 
       <div className="list">
         {data.map((clothes, i) => {
           return (
-            <ListItem key={i} onClick={DeleteList}>
-              <h2>{clothes.id}</h2>
-              <h4>{clothes.size}</h4>
-              <button onClick={() => DeleteList(clothes.id, clothes.size)}>
-                cancel
-              </button>
+            <ListItem key={i}>
+              <div
+                onClick={() =>
+                  window.open(`https://www.musinsa.com/app/goods/${clothes.id}`)
+                }>
+                <img
+                  src={cancel}
+                  width="20px"
+                  onClick={() => DeleteList(clothes.id, clothes.size)}
+                />
+                <img
+                  src={
+                    "https:" +
+                    clothes.imageHTML.split('"', 2).toString().substr(10)
+                  }
+                  width="170px"
+                />
+                <h4>{clothes.title}</h4>
+                <h4>{clothes.size}</h4>
+                <h5>{clothes.id}</h5>
+              </div>
             </ListItem>
           );
         })}
