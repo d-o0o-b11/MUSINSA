@@ -84,7 +84,7 @@ const Main = () => {
                 />
                 <img
                   src={
-                    "httpss:" +
+                    "https:" +
                     clothes.imageHTML.split('"', 2).toString().substr(10)
                   }
                   width="170px"
